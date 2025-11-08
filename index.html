@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถังขยะอัจฉริยะ - หน้าหลัก</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body {
+            /* ใช้ IBM Plex Sans Thai เป็นฟอนต์หลัก */
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background-color: #F0F4F8;
+            color: #263238;
+        }
+        h1, h2, h3, h4, h5, h6, .btn-primary {
+            /* ใช้ Poppins สำหรับหัวข้อและปุ่ม */
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+        }
+        
+        /* สไตล์ Neumorphism (Soft UI) สำหรับ Card */
+        .neumorphic-card {
+            background: #F0F4F8;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 12px 12px 24px #ccd1d5, -12px -12px 24px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .neumorphic-card:hover {
+            box-shadow: 16px 16px 32px #ccd1d5, -16px -16px 32px #ffffff;
+            transform: translateY(-4px);
+        }
+        
+        /* สไตล์ปุ่มหลัก */
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(145deg, #00a496, #008175);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 6px 6px 12px #ccd1d5, -6px -6px 12px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #ccd1d5, -8px -8px 16px #ffffff;
+        }
+        .btn-primary:active {
+            transform: translateY(1px);
+            box-shadow: 4px 4px 8px #ccd1d5, -4px -4px 8px #ffffff;
+        }
+
+        /* สไตล์ปุ่มรอง (สำหรับดาวน์โหลด) */
+        .btn-secondary {
+            display: inline-block;
+            background: #F0F4F8;
+            color: #009688;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 6px 6px 12px #ccd1d5, -6px -6px 12px #ffffff;
+            transition: all 0.3s ease;
+            border: 2px solid #F0F4F8; /* ซ่อนขอบ */
+        }
+        .btn-secondary:hover {
+            border-color: #009688; /* แสดงขอบเมื่อ hover */
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #ccd1d5, -8px -8px 16px #ffffff;
+        }
+        
+        /* สไตล์ Code Block */
+        pre {
+            background-color: #2C2C2C;
+            color: #A9B7C6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'IBM Plex Sans Thai', monospace; /* หรือ Source Code Pro */
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .copy-btn:hover {
+            opacity: 1;
+            background: #009688;
+        }
+        .copy-btn-tooltip {
+            position: absolute;
+            top: 1rem;
+            right: 4rem;
+            background-color: #263238;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .copy-btn:hover .copy-btn-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
+            <a href="#home" class="text-2xl font-bold text-[#009688]">
+                <i class="fas fa-trash-alt mr-2"></i>ถังขยะ<span class="text-[#263238]">อัจฉริยะ</span>
+            </a>
+            <div class="space-x-2 md:space-x-4 mt-2 md:mt-0">
+                <a href="#home" class="text-gray-600 hover:text-[#009688]">หน้าแรก</a>
+                
+                <a href="evaluate.html" class="text-gray-600 hover:text-[#009688] font-semibold text-[#FFB300]"><i class="fas fa-edit mr-1"></i>ประเมินผล</a>
+            
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="home" class="py-16 md:py-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl font-bold text-[#263238]">
+                        <span class="text-[#009688]"><i class="fas fa-magic-wand-sparkles mr-2"></i>นวัตกรรมไร้สัมผัส</span>
+                        <br>ด้วยถังขยะอัจฉริยะ
+                    </h1>
+                    <p class="mt-4 text-lg text-gray-700">
+                        ถังขยะอัจฉริยะ คือโครงงาน DIY (Do It Yourself) ด้านอิเล็กทรอนิกส์และหุ่นยนต์เบื้องต้นที่นำ บอร์ดไมโครคอนโทรลเลอร์ Arduino มาใช้ควบคุมกลไกให้ถังขยะธรรมดาสามารถ เปิด-ปิดฝาได้เองโดยอัตโนมัติ
+                    </p>
+                    <div class="mt-8">
+                        <a href="#benefits" class="btn-primary text-lg">
+                         <i class="fas fa-check-circle mr-2 text-[#fffff]"></i>ดูประโยชน์
+                        </a>
+                            <a href="evaluate.html" class="btn-primary text-lg">
+                         <i class="fas fa-edit mr-1"></i>ประเมินโครงงาน
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center">
+                    <img src="Untitled design (10).png" 
+                         alt="ภาพ 3D Isometric ของถังขยะอัตโนมัติ" 
+                         class="rounded-lg shadow-xl"
+                         onerror="this.src='https://placehold.co/500x400/F0F4F8/263238?text=Image+Load+Error'">
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="benefits" class="py-16 bg-[#E6EBF0] rounded-3xl">
+            <h2 class="text-3xl font-bold text-center mb-12">
+                <i class="fas fa-check-circle mr-2 text-[#009688]"></i>คุณสมบัติเด่นและประโยชน์
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
+                <div class="neumorphic-card text-center border-t-4 border-[#009688]">
+                    <i class="fas fa-shield-virus text-4xl text-[#009688] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">สุขอนามัย</h3>
+                    <p class="text-gray-600">ลดความเสี่ยงในการสัมผัสเชื้อโรคที่ฝาถังโดยตรง</p>
+                </div>
+                <div class="neumorphic-card text-center border-t-4 border-[#009688]">
+                    <i class="fas fa-hand-pointer text-4xl text-[#009688] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">ความสะดวก</h3>
+                    <p class="text-gray-600">เพียงยื่นมือมาทิ้ง ฝาก็เปิดให้ทันที เหมาะสำหรับขณะที่มือไม่ว่างหรือถือของอยู่</p>
+                </div>
+                <div class="neumorphic-card text-center border-t-4 border-[#009688]">
+                    <i class="fas fa-trash-alt text-4xl text-[#009688] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">การจัดการขยะ</h3>
+                    <p class="text-gray-600">สามารถทิ้งขยะได้ง่ายมากขึ้น ผ่านการตรวจจับของเซ็นเซอร์</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="materials" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-12">
+                <i class="fas fa-tools mr-2 text-[#009688]"></i>วัสดุที่ใช้ในโครงงาน
+            </h2>
+            <div class="max-w-4xl mx-auto neumorphic-card">
+                <p class="text-center text-lg mb-6">รายการวัสดุที่จำเป็นสำหรับโครงงานต้นแบบ:</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full min-w-max text-left">
+                        <thead class="border-b-2 border-gray-300">
+                            <tr>
+                                <th class="py-3 px-4 text-lg font-semibold text-[#009688]">ส่วนประกอบ</th>
+                                <th class="py-3 px-4 text-lg font-semibold text-[#009688]">จำนวน</th>
+                                <th class="py-3 px-4 text-lg font-semibold text-[#009688]">หน้าที่หลัก</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-4 px-4"><i class="fas fa-microchip mr-3 text-gray-500"></i>บอร์ด Arduino UNO R3</td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4">สมองของโปรเจกต์ (Microcontroller)</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-4 px-4"><i class="fas fa-broadcast-tower mr-3 text-gray-500"></i>Ultrasonic Sensor (HC-SR04)</td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4">ตรวจจับมือและวัดระยะห่าง</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-4 px-4"><i class="fas fa-cogs mr-3 text-gray-500"></i>Servo Motor (SG90/MG90)</td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4">กลไกสำหรับเปิด/ปิดฝาถัง</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-4 px-4"><i class="fas fa-plug mr-3 text-gray-500"></i>สายไฟจัมเปอร์ (M-M, M-F)</td>
+                                <td class="py-4 px-4">ตามต้องการ</td>
+                                <td class="py-4 px-4">เชื่อมต่อวงจรไฟฟ้า</td>
+                            </tr>
+                            <tr class="hover:bg-gray-100">
+                                <td class="py-4 px-4"><i class="fas fa-box mr-3 text-gray-500"></i>ถังขยะมีฝาปิด (ต้นแบบ)</td>
+                                <td class="py-4 px-4">1</td>
+                                <td class="py-4 px-4">โครงสร้างหลัก (Housing)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 text-center bg-yellow-100 p-4 rounded-lg border border-yellow-300">
+                    <p class="font-semibold text-yellow-800"><i class="fas fa-desktop mr-2"></i>ซอฟต์แวร์ที่ต้องใช้: <a href="https://www.arduino.cc/en/software" target="_blank" class="underline hover:text-yellow-600">Arduino IDE (ดาวน์โหลดฟรี)</a></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tutorial" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-12">
+                <i class="fas fa-file-code mr-2 text-[#009688]"></i>การทำงาน
+            </h2>
+            
+                <div class="neumorphic-card space-y-6 max-w-lg mx-auto">
+                    <h3 class="text-2xl font-semibold text-[#009688]"><i class="fas fa-sitemap mr-2"></i>แผนผังการต่อวงจร</h3>
+                    <img src="https://dw.lnwfile.com/_/dw/_raw/y0/e9/49.jpg" 
+                         alt="แผนผังการต่อวงจร" 
+                         class="rounded-lg shadow-lg w-full"
+                         onerror="this.src='https://placehold.co/600x400/F0F4F8/263238?text=Image+Load+Error'">
+                    
+                    <h4 class="text-xl font-semibold pt-4">Pin Mapping:</h4>
+                    <ul class="list-disc list-inside space-y-2 text-gray-700">
+                        <li>Ultrasonic VCC <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino 5V</li>
+                        <li>Ultrasonic GND <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino GND</li>
+                        <li>Ultrasonic Trig <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino Digital Pin 6</li>
+                        <li>Ultrasonic Echo <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino Digital Pin 7</li>
+                        <li class="pt-2 border-t mt-2">Servo Signal (Orange) <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino Digital Pin 9 (PWM)</li>
+                        <li>Servo VCC (Red) <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino 5V</li>
+                        <li>Servo GND (Brown) <i class="fas fa-long-arrow-alt-right mx-2 text-[#009688]"></i> Arduino GND</li>
+                    </ul>
+                </div>
+
+                        </section>
+
+        <section id="evaluation" class="py-16 text-center bg-white rounded-3xl shadow-inner-lg">
+            <h2 class="text-3xl font-bold mb-6">
+                <i class="fas fa-clipboard-check mr-2 text-[#009688]"></i>แบบประเมินโครงงาน
+            </h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-8">
+                ฝากประเมินให้ด้วยนะครับ เพื่อเป็นการปรับปรุงและพัฒนาโครงงานให้ดียิ่งขึ้น
+            </p>
+            <a href="evaluate.html" class="btn-primary text-lg">
+                <i class="fas fa-paper-plane mr-2"></i>ไปที่หน้าประเมินผล
+            </a>
+        </section>
+
+
+    </main>
+
+    <footer class="text-center mt-16 mb-8 px-4">
+        <p class="text-gray-600">Powered by <a href="https://saranphat-port.site/" class="text-[#009688] hover:underline font-semibold">Saranphat Sridadech</a></p>
+        <p class="text-gray-500 text-sm mt-2">อุปกรณ์ทำโครงงานและ IDE โดย <a href="https://www.arduino.cc/en/software/" class="text-[#009688] hover:underline font-semibold">Arduino</a> และ <a href="https://www.arduino.cc/en/software/" class="text-[#009688] hover:underline font-semibold">Arduino IDE</a></p>
+    </footer>
+
+    <script>
+        // ฟังก์ชันสำหรับ Copy Code
+        function copyCode() {
+            const codeBlock = document.getElementById('arduino-code').querySelector('code').innerText;
+            navigator.clipboard.writeText(codeBlock).then(() => {
+                // (Optional) แสดง Feedback ว่า Copy แล้ว
+                console.log('Code copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy code: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

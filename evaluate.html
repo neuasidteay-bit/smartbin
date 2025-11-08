@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถังขยะอัจฉริยะ - แบบประเมิน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
+    <style>
+        body {
+            /* ใช้ IBM Plex Sans Thai เป็นฟอนต์หลัก */
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background-color: #F0F4F8;
+            color: #263238;
+        }
+        h1, h2, h3, h4, h5, h6, .btn-primary {
+            /* ใช้ Poppins สำหรับหัวข้อและปุ่ม */
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+        }
+        .neumorphic-card {
+            background: #F0F4F8;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 12px 12px 24px #ccd1d5, -12px -12px 24px #ffffff;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            background-color: #F0F4F8;
+            box-shadow: inset 6px 6px 12px #ccd1d5, inset -6px -6px 12px #ffffff;
+            transition: all 0.3s ease;
+            font-family: 'IBM Plex Sans Thai', sans-serif; /* ให้ input ใช้ฟอนต์ไทย */
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            box-shadow: inset 8px 8px 16px #ccd1d5, inset -8px -8px 16px #ffffff, 0 0 0 2px #009688;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: #009688;
+        }
+        .btn-primary {
+            background: linear-gradient(145deg, #00a496, #008175);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 6px 6px 12px #ccd1d5, -6px -6px 12px #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 8px 8px 16px #ccd1d5, -8px -8px 16px #ffffff;
+        }
+        .btn-primary:active {
+            transform: translateY(1px);
+            box-shadow: 4px 4px 8px #ccd1d5, -4px -4px 8px #ffffff;
+        }
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap; /* ทำให้ปุ่มตัดบรรทัดได้บนจอเล็ก */
+            gap: 0.75rem; /* ลดช่องว่างระหว่างปุ่มเล็กน้อย */
+        }
+        .radio-label {
+            position: relative;
+        }
+        .radio-label input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .radio-label span {
+            display: inline-block;
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            background: #F0F4F8;
+            box-shadow: 6px 6px 12px #ccd1d5, -6px -6px 12px #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem; /* ปรับขนาดฟอนต์เล็กน้อย */
+        }
+        .radio-label input[type="radio"]:checked + span {
+            background-color: #009688;
+            color: white;
+            box-shadow: inset 6px 6px 12px #007c6f, inset -6px -6px 12px #00b09d;
+        }
+        .radio-label input[type="radio"]:focus + span {
+            box-shadow: 0 0 0 2px #FFB300;
+        }
+        /* CSS สำหรับ Star Rating */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse; /* ทำให้ดาวเรียงจากขวามาซ้าย */
+            justify-content: center;
+            gap: 0.25rem;
+        }
+        .star-rating input[type="radio"] {
+            display: none;
+        }
+        .star-rating label {
+            font-size: 2rem;
+            color: #9CA3AF; /* สีเทา */
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        /* เมื่อ hover ดาว หรือดาวที่อยู่ก่อนหน้าดาวที่ hover */
+        .star-rating:not(:hover) input[type="radio"]:checked ~ label,
+        .star-rating:hover input[type="radio"] ~ label:hover,
+        .star-rating:hover input[type="radio"] ~ label:hover ~ label {
+            color: #FFB300; /* สีเหลืองอำพัน */
+        }
+        /* ดาวที่ถูกเลือก (เมื่อไม่ hover) */
+        .star-rating input[type="radio"]:checked + label {
+            color: #FFB300;
+        }
+
+        /* 2. เพิ่ม CSS สำหรับ Toast Notification */
+        .toast-base {
+            position: fixed;
+            top: 1.25rem; /* 20px */
+            right: 1.25rem; /* 20px */
+            z-index: 9999;
+            padding: 1rem;
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            color: white;
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            transition: all 0.3s ease-in-out;
+            transform: translateX(120%); /* เริ่มต้นนอกจอ */
+            opacity: 0;
+        }
+        .toast-show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast-success { background-color: #009688; } /* สี Teal */
+        .toast-error { background-color: #D32F2F; } /* สีแดง */
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="toast-notification" class="toast-base">
+        <i id="toast-icon" class="fas fa-check-circle mr-2"></i>
+        <span id="toast-message"></span>
+    </div>
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-[#009688]">
+                <i class="fas fa-trash-alt mr-2"></i>ถังขยะ<span class="text-[#263238]">อัจฉริยะ</span>
+            </a>
+            <div class="space-x-2 md:space-x-4 mt-2 md:mt-0">
+                <a href="index.html" class="text-gray-600 hover:text-[#009688]">หน้าแรก</a>
+                
+                <a href="evaluate.html" class="text-gray-600 hover:text-[#009688] font-semibold text-[#FFB300]"><i class="fas fa-edit mr-1"></i>ประเมินผล</a>
+            
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            
+            <form id="eval-form" action="https://docs.google.com/forms/d/e/1FAIpQLSfDOTbrc1n-ND_tkZRO0FkmAPHaXJBgJZRFZFUlhrPo1anGwg/formResponse" method="POST" class="neumorphic-card space-y-8" target="hidden_iframe">
+                
+                <h1 class="text-3xl font-bold text-center text-[#263238]">แบบประเมินโครงงาน</h1>
+                <p class="text-center text-gray-600">
+                    งดประเมินเล่น/มั่วและซ้ำนะครับ ประเมินตามความเป็นจริง และฝากประเมินด้วยนะครับ ขอบคุณครับ
+                </p>
+
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4"><i class="fas fa-user mr-2"></i>ข้อมูลผู้ประเมิน</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="evaluator_name" class="form-label">ชื่อผู้ประเมิน:</label>
+                                        
+                            <input type="text" id="evaluator_name" name="entry.1406471431" class="form-input" required>
+                            
+                        </div>
+                        
+                        <div>
+                            <label for="evaluator_email" class="form-label">อีเมล:</label>
+                            <input type="email" id="evaluator_email" name="entry.1369898776" class="form-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4"><i class="fas fa-lightbulb mr-2"></i>1. การประเมินเชิงแนวคิด</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="form-label">1.1 ความน่าสนใจในการนำเสนอและใช้งานในชีวิตประจำวัน:</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.326563806" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.326563806" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.326563806" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.326563806" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.326563806" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">1.2 แนวคิดการแก้ปัญหาเรื่องสุขอนามัย (ไม่ต้องสัมผัส) มีความคิดริเริ่ม/แปลกใหม่:</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.55717744" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.55717744" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.55717744" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.55717744" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.55717744" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">1.3 ประโยชน์เพิ่มเติมที่คุ้มค่า (เทียบกับถังขยะทั่วไป):</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.47456831" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.47456831" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.47456831" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.47456831" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.47456831" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-semibold mb-4"><i class="fas fa-star mr-2"></i>2. การประเมินภาพรวมและความพึงพอใจ</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="form-label">2.1 ประโยชน์ในชีวิตประจำวัน (ความสะดวกสบาย):</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.1397019249" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1397019249" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1397019249" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1397019249" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1397019249" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">2.2 ศักยภาพในการต่อยอด (เช่น แจ้งเตือนถังเต็ม):</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.1597496985" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1597496985" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1597496985" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1597496985" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1597496985" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">2.3 ความคุ้มค่าโดยรวม (การพัฒนาและการใช้งาน):</label>
+                            <div class="radio-group">
+                                <label class="radio-label"><input type="radio" name="entry.1239145680" value="มากที่สุด" required><span>มากที่สุด</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1239145680" value="มาก"><span>มาก</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1239145680" value="ปานกลาง"><span>ปานกลาง</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1239145680" value="น้อย"><span>น้อย</span></label>
+                                <label class="radio-label"><input type="radio" name="entry.1239145680" value="น้อยที่สุด"><span>น้อยที่สุด</span></label>
+                            </div>
+                        </div>
+                        
+                        <hr class="border-gray-300"/>
+                        
+                        <div>
+                            <label for="overall_rating" class="form-label">ความพึงพอใจโดยรวม (1-5 ดาว):</label>
+                            <div class="star-rating">
+                                <input type="radio" id="star5" name="entry.972315425" value="5" required><label for="star5"><i class="fas fa-star"></i></LAbel>
+                                <input type="radio" id="star4" name="entry.972315425" value="4"><label for="star4"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star3" name="entry.972315425" value="3"><label for="star3"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star2" name="entry.972315425" value="2"><label for="star2"><i class="fas fa-star"></i></label>
+                                <input type="radio" id="star1" name="entry.972315425" value="1"><label for="star1"><i class="fas fa-star"></i></label>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="comments" class="form-label">ข้อเสนอแนะเพิ่มเติม (ไม่บังคับ):</label>
+                            <textarea id="comments" name="entry.564878054" rows="4" class="form-input"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="cf-turnstile" data-sitekey="YOUR_CLOUDFLARE_SITEKEY_HERE" data-theme="light"></div>
+                </div>
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn-primary text-lg">
+                        <i class="fas fa-paper-plane mr-2"></i>ส่งผลการประเมิน
+                    </button>
+                    
+                </div>
+                <p class="text-center text-red-600">
+                    มาตรา 14: นำเข้าสู่ระบบคอมพิวเตอร์ซึ่งข้อมูลคอมพิวเตอร์ปลอมหรือบิดเบือน อันเป็นเท็จ โดยมีเจตนาทุจริตหรือหลอกลวง หรือมีลักษณะที่น่าจะก่อให้เกิดความเสียหายแก่ประชาชน จำคุกไม่เกิน 5 ปี หรือปรับไม่เกิน 100,000 บาท หรือทั้งจำทั้งปรับ
+                </p>
+
+                </form>
+            
+            <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="handleIframeLoad()"></iframe>
+            
+        </div>
+    </main>
+
+    <footer class="text-center mt-16 mb-8 px-4">
+        <p class="text-gray-600">Powered by <a href="https://saranphat-port.site/" class="text-[#009688] hover:underline font-semibold">Saranphat Sridadech</a></p>
+        <p class="text-gray-500 text-sm mt-2">อุปกรณ์ทำโครงงานและ IDE โดย <a href="https://www.arduino.cc/en/software/" class="text-[#009688] hover:underline font-semibold">Arduino</a> และ <a href="https://www.arduino.cc/en/software/" class="text-[#009688] hover:underline font-semibold">Arduino IDE</a></p>
+    </footer>
+
+    <script>
+        // ------------------------------------
+        // --- 6.1 ฟังก์ชันสำหรับ Toast Pop-up ---
+        // ------------------------------------
+        let toastTimeout;
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast-notification');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            // เคลียร์ Timeout เก่า (ถ้ามี)
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+            }
+
+            // ตั้งค่าข้อความและสี
+            toastMessage.innerText = message;
+            if (isError) {
+                toast.classList.remove('toast-success');
+                toast.classList.add('toast-error');
+                toastIcon.className = "fas fa-times-circle mr-2"; // ไอคอน X
+            } else {
+                toast.classList.remove('toast-error');
+                toast.classList.add('toast-success');
+                toastIcon.className = "fas fa-check-circle mr-2"; // ไอคอนถูก
+            }
+
+            // แสดง Toast
+            toast.classList.add('toast-show');
+
+            // ซ่อน Toast หลังจาก 4 วินาที
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-show');
+            }, 4000);
+        }
+
+        // ------------------------------------------------
+        // --- 6.2 อัปเดต Form Submission และ Turnstile ---
+        // ------------------------------------------------
+        let formSubmitted = false;
+        const form = document.getElementById('eval-form');
+        // const status = document.getElementById('form-status'); // ไม่ใช้แล้ว
+
+        form.addEventListener('submit', function(event) {
+            
+            // --- 6.3 ตรวจสอบ Turnstile ---
+            const formData = new FormData(form);
+            const turnstileResponse = formData.get('cf-turnstile-response');
+            
+            if (!turnstileResponse) {
+                event.preventDefault(); // หยุดการส่งฟอร์ม
+                showToast("กรุณายืนยันว่าคุณไม่ใช่บอท", true); // แสดง Toast Error
+                return; // จบการทำงาน
+            }
+            // --- จบการตรวจสอบ Turnstile ---
+
+            // ตรวจสอบว่าฟอร์มผ่าน validation ของเบราว์เซอร์ก่อน
+            if (form.checkValidity()) {
+                formSubmitted = true;
+                showToast("กำลังส่งข้อมูล...", false); // แสดง Toast "กำลังส่ง"
+            } else {
+                // ถ้าฟอร์มไม่ผ่าน validation (เช่น กรอกไม่ครบ)
+                showToast("กรุณากรอกข้อมูลให้ครบทุกช่องที่กำหนด", true);
+            }
+        });
+        
+        function handleIframeLoad() {
+            if (formSubmitted) {
+                showToast("ส่งข้อมูลเรียบร้อย ขอบคุณครับ!", false); // Toast "สำเร็จ"
+                form.reset(); // รีเซ็ตฟอร์ม
+                
+                // รีเซ็ตดาว
+                const starLabels = document.querySelectorAll('.star-rating label');
+                starLabels.forEach(label => {
+                    label.style.color = '#9CA3AF'; // กลับเป็นสีเทา
+                });
+
+                // รีเซ็ต Cloudflare Turnstile
+                if (typeof turnstile !== 'undefined') {
+                    turnstile.reset();
+                }
+
+                formSubmitted = false; // รีเซ็ตสถานะ
+            }
+        }
+    </script>
+</body>
+</html>
